@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}Register User — LogiStock Administration{% endblock %}
+
+{% block content %}
+
+{# ── PAGE HEADER ─────────────────────────────────────────── #}
+<div class="page-header d-flex flex-wrap justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="page-header-title">User Administration</h1>
+    <p class="page-header-sub">Create and configure staff and administrator access credentials.</p>
+  </div>
+  <div class="d-flex align-items-center gap-2 mt-3 mt-md-0">
+    <a href="{{ url_for('dashboard') }}" class="btn-nft-glass py-2 px-3">
+      <i class="bi bi-arrow-left me-1"></i> Dashboard
+    </a>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-lg-6 col-md-8">
+    <div class="glass-card" data-tilt>
+      <div class="card-head">
+        <div>
+          <h5 class="mb-0 text-white"><i class="bi bi-shield-lock me-2" style="color:var(--mint);"></i>Create User Account</h5>
+          <span class="small text-muted">Admin Privileged Governance</span>
+        </div>
+        <a href="{{ url_for('dashboard') }}" class="btn-nft-glass py-1 px-3 d-none d-sm-inline-flex" style="font-size:0.8rem;">
+          <i class="bi bi-arrow-left me-1"></i> Dashboard
+        </a>
+      </div>
+
+      <div class="card-body p-4 p-md-5">
+        <form method="POST" action="{{ url_for('register') }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+          <!-- Username -->
+          <div class="mb-4">
+            <label class="form-label small text-muted" for="username">Username <span class="text-danger">*</span></label>
+            <div class="position-relative">
+              <input type="text"
+                     name="username"
+                     id="username"
+                     class="nft-input"
+                     placeholder="e.g. logistics_operator"
+                     required
+                     autofocus>
+              <i class="bi bi-person input-icon"></i>
+            </div>
+            <div class="small mt-1 text-muted" style="font-size:0.75rem;">Must be unique across all system credentials.</div>
+          </div>
+
+          <!-- Password -->
+          <div class="mb-4">
+            <label class="form-label small text-muted" for="password">Password <span class="text-danger">*</span></label>
+            <div class="position-relative">
+              <input type="password"
+                     name="password"
+                     id="password"
+                     class="nft-input"
+                     placeholder="Enter secure password"
+                     required>
+              <i class="bi bi-lock input-icon"></i>
+              <button type="button" class="password-toggle-btn" data-target="password" aria-label="Toggle password">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Role -->
+          <div class="mb-5">
+            <label class="form-label small text-muted" for="role">Assigned Access Role <span class="text-danger">*</span></label>
+            <div class="position-relative">
+              <select name="role" id="role" class="nft-input" style="padding-left:18px; padding-right:18px;" required>
+                <option value="staff" selected style="background:#07211b; color:#fff;">Staff — View Inventory &amp; Perform Stock IN / OUT</option>
+                <option value="admin" style="background:#07211b; color:#fff;">Admin — Full System Privileges (Catalog CRUD, Users, Audits)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end gap-3 pt-3 border-top border-white border-opacity-10 align-items-center">
+            <a href="{{ url_for('dashboard') }}" class="btn-nft-glass py-2 px-4">Cancel</a>
+            <button type="submit" class="btn-nft-primary py-2 px-5">
+              <i class="bi bi-check2-circle me-1"></i> Create Account
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
