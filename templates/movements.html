@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Movement History & Audit Log — LogiStock{% endblock %}
+
+{% block content %}
+
+{# ── PAGE HEADER ─────────────────────────────────────────── #}
+<div class="page-header d-flex flex-wrap justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="page-header-title">Movement Audit Log</h1>
+    <p class="page-header-sub">Complete historical ledger of every unit received or dispatched in warehouse records.</p>
+  </div>
+  <div class="d-flex align-items-center gap-2 mt-3 mt-md-0">
+    <span class="badge-in">▲ Stock IN</span>
+    <span class="badge-out">▼ Stock OUT</span>
+  </div>
+</div>
+
+<div class="glass-card">
+  <div class="card-head">
+    <h6>
+      <i class="bi bi-clock-history me-2" style="color:var(--mint);"></i> All Warehouse Transactions
+      <span class="small ms-2" style="color:var(--text-muted);">
+        — {{ movements | length }} audit record{{ 's' if movements | length != 1 }}
+      </span>
+    </h6>
+    <a href="{{ url_for('product_list') }}" class="btn-nft-glass py-1 px-3" style="font-size:0.75rem;">
+      <i class="bi bi-boxes me-1"></i> Inventory Catalog
+    </a>
+  </div>
+
+  {% if movements %}
+  <div class="table-responsive">
+    <table class="g-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Product</th>
+          <th>Type</th>
+          <th>Delta</th>
+          <th>Date &amp; Time (UTC)</th>
+          <th>Logged By</th>
+          <th>Transaction Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in movements %}
+        <tr>
+          <td>
+            <span style="color:var(--text-muted); font-size:0.8rem;">{{ loop.index }}</span>
+          </td>
+          <td data-label="Product">
+            <span class="td-name">{{ m.product_name }}</span>
+          </td>
+          <td data-label="Type">
+            {% if m.type == 'IN' %}
+              <span class="badge-in">▲ IN</span>
+            {% else %}
+              <span class="badge-out">▼ OUT</span>
+            {% endif %}
+          </td>
+          <td data-label="Delta">
+            <span style="font-weight:700; font-family:var(--font-heading); color:{% if m.type == 'IN' %}var(--mint){% else %}var(--coral){% endif %};">
+              {% if m.type == 'IN' %}+{% else %}−{% endif %}{{ m.qty }}
+            </span>
+          </td>
+          <td data-label="Date">
+            <div style="font-size:0.82rem; color:#fff;">
+              {{ m.date.strftime('%d %b %Y') }}
+            </div>
+            <div style="font-size:0.75rem; color:var(--text-muted);">
+              {{ m.date.strftime('%H:%M UTC') }}
+            </div>
+          </td>
+          <td data-label="User">
+            <span class="badge py-1 px-2 rounded-pill" style="background:rgba(10,40,32,0.7); border:1px solid var(--glass-border); color:var(--text-2); font-size:0.78rem;">
+              <i class="bi bi-person me-1" style="color:var(--cyan);"></i>{{ m.user or 'system' }}
+            </span>
+          </td>
+          <td data-label="Note">
+            <span style="font-size:0.82rem; color:var(--text-3);">
+              {% if m.note %}
+                {{ m.note }}
+              {% else %}
+                <span style="opacity:0.4;">—</span>
+              {% endif %}
+            </span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% else %}
+  <div class="text-center py-5">
+    <i class="bi bi-inbox fs-1 text-muted opacity-50 mb-3 d-block"></i>
+    <h5 class="text-white">No transactions recorded yet</h5>
+    <p class="small mb-4" style="color:var(--text-muted);">Stock adjustments made on the Inventory page will appear here automatically.</p>
+    <a href="{{ url_for('product_list') }}" class="btn-nft-primary">
+      <i class="bi bi-boxes"></i> Go to Inventory
+    </a>
+  </div>
+  {% endif %}
+
+</div>
+
+{% endblock %}
