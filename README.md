@@ -135,3 +135,4 @@ LogiStock includes a full suite of automated unit and integration tests. All tes
 | POST | \/products/delete/<id>\| Remove a product | Admin Only |
 | POST | \/stock/<id>/<kind>\ | Adjust stock level (\kind\: IN or OUT) | Authenticated |
 | GET | \/movements\ | Stock movement history & audit trail | Authenticated |
+
