@@ -119,7 +119,7 @@ LogiStock includes a full suite of automated unit and integration tests. All tes
 .\\venv\\Scripts\\python.exe -m pytest tests/ -v
 \\\
 
----
+
 
 ## Routes & API Reference
 
