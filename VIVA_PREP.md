@@ -86,3 +86,4 @@ This offloads arithmetic computation to MongoDB and returns only a single scalar
 2. **Fresh Fixtures:** Collections are wiped before each test (utouse=True fixture), ensuring deterministic, side-effect-free execution.
 3. **Index Re-generation:** After session database resets, indexes (including the unique SKU index) are re-created to validate true database constraints during tests.
 4. **Coverage:** 22 automated test cases cover authentication, CRUD validation, negative value rejections, stock boundary constraints, and RBAC permissions.
+
