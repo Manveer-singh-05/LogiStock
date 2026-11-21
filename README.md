@@ -120,7 +120,6 @@ LogiStock includes a full suite of automated unit and integration tests. All tes
 \\\
 
 
-
 ## Routes & API Reference
 
 | Method | Endpoint | Description | Access |
